@@ -10,25 +10,38 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
-      - run: npm install
+      - name: Clean install
+        run: npm ci
 
-      - run: npm run build
+      - name: Clean previous build
+        run: rm -rf dist
+
+      - name: Build project
+        run: npm run build
 
       - name: Verify build output
-        run: |
-          echo "Checking dist content"
-          ls -R dist
+        run: ls -R dist
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -37,11 +50,14 @@ jobs:
 
   deploy:
     needs: build
+
     runs-on: ubuntu-latest
 
-    permissions:
-      pages: write
-      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
