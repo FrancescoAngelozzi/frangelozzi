@@ -1,3 +1,11 @@
-<script>
-  window.location.href = "/frangelozzi/";
-</script>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script>
+      // redirect SPA GitHub Pages fix
+      sessionStorage.redirect = location.href;
+      location.replace("/frangelozzi/");
+    </script>
+  </head>
+</html>
