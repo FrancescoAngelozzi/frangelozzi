@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Section } from "./Section";
-import { Check } from "lucide-react";
+import { Check, Github } from "lucide-react";
 
 const EMAIL = "fa.angelozzi@gmail.com";
 const PHONE_DISPLAY = "+39 391 353 5706";
@@ -110,13 +110,14 @@ export const Contact = () => {
 
           <li className="flex items-center justify-between gap-3 rounded-sm border border-border bg-card/60 px-4 py-3 backdrop-blur">
             <span className="text-muted-foreground">github</span>
-
+        
             <a
               href="https://github.com/FrancescoAngelozzi"
               target="_blank"
               rel="noopener noreferrer"
-              className="truncate text-primary hover:underline"
+              className="inline-flex items-center gap-2 text-primary hover:underline"
             >
+              <Github className="h-4 w-4" />
               FrancescoAngelozzi
             </a>
           </li>
